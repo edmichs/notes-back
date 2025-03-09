@@ -11,6 +11,7 @@ import com.speer.notes.repository.UserRepository;
 import com.speer.notes.service.SearchService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,7 @@ public class SearchServiceImpl implements SearchService {
      * @return
      */
     @Override
-    public List<NoteResponse> searchNotes(String query) {
+    public List<NoteResponse> searchNotes(String query, Pageable pageable) {
         User currentUser = getCurrentUser();
 
         String formattedQuery = formatSearchQuery(query);
