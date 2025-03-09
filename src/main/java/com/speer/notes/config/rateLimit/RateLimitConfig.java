@@ -1,6 +1,6 @@
 package com.speer.notes.config.rateLimit;
 
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -22,7 +22,7 @@ public class RateLimitConfig implements WebMvcConfigurer {
         return new RateLimitInterceptor(rateLimitingEnabled, rateLimit, durationInSeconds);
     }
 
-    @Bean
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(rateLimitInterceptor())
                 .addPathPatterns("/api/**")

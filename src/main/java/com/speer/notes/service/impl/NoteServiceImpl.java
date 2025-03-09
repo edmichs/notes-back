@@ -43,6 +43,7 @@ public class NoteServiceImpl implements NoteService {
     public List<NoteResponse> getAllNotes() {
         User currentUser = getCurrentUser();
         List<Note> notes = noteRepository.findAllAccessibleByUser(currentUser);
+        logger.info(notes.size() + " notes found");
         return noteMapper.toNoteResponseList(notes);
     }
 
@@ -55,6 +56,7 @@ public class NoteServiceImpl implements NoteService {
         User currentUser = getCurrentUser();
         Note note = noteRepository.findByIdAndAccessible(id, currentUser)
                 .orElseThrow(() -> new ResourceNotFoundException("Note not found with id: " + id));
+        logger.info(note + " note found");
         return noteMapper.toNoteResponse(note);
     }
 
@@ -69,6 +71,7 @@ public class NoteServiceImpl implements NoteService {
         Note note = noteMapper.toNote(noteRequest);
         note.setOwner(currentUser);
         Note savedNote = noteRepository.save(note);
+        logger.info(savedNote + " note created");
 
         return noteMapper.toNoteResponse(savedNote);
     }
@@ -87,6 +90,7 @@ public class NoteServiceImpl implements NoteService {
 
         noteMapper.updateNoteFromRequest(noteRequest, note);
         Note updatedNote = noteRepository.save(note);
+        logger.info(updatedNote + " note updated");
 
         return noteMapper.toNoteResponse(updatedNote);
     }
@@ -103,6 +107,7 @@ public class NoteServiceImpl implements NoteService {
                 .orElseThrow(() -> new ResourceNotFoundException("Note not found with id: " + id));
 
         noteRepository.delete(note);
+        logger.info("note deleted");
 
         return new MessageResponse("Note deleted successfully");
     }
