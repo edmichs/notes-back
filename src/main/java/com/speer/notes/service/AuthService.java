@@ -8,4 +8,5 @@ import com.speer.notes.dto.response.MessageResponse;
 public interface AuthService {
     LoginResponse authenticateUser(LoginRequest loginRequest);
     MessageResponse registerUser(RegisterRequest registerRequest);
+
 }

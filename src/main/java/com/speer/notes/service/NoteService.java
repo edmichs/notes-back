@@ -5,8 +5,6 @@ import com.speer.notes.dto.request.ShareNoteRequest;
 import com.speer.notes.dto.response.MessageResponse;
 import com.speer.notes.dto.response.NoteResponse;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 

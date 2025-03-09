@@ -24,6 +24,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -73,6 +74,8 @@ public class NoteServiceImpl implements NoteService {
 
         Note note = noteMapper.toNote(noteRequest);
         note.setOwner(currentUser);
+        note.setCreatedAt(LocalDateTime.now());
+        note.setUpdatedAt(LocalDateTime.now());
         Note savedNote = noteRepository.save(note);
         logger.info(savedNote + " note created");
 

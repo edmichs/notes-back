@@ -9,6 +9,7 @@ import com.speer.notes.dto.response.MessageResponse;
 import com.speer.notes.entity.ERole;
 import com.speer.notes.entity.Role;
 import com.speer.notes.entity.User;
+import com.speer.notes.exception.UnauthorizedException;
 import com.speer.notes.repository.RoleRepository;
 import com.speer.notes.repository.UserRepository;
 import com.speer.notes.service.AuthService;
@@ -130,4 +131,5 @@ public class AuthServiceImpl implements AuthService {
 
         return new MessageResponse("User registered successfully!");
     }
+
 }

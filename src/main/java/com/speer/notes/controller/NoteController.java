@@ -1,10 +1,10 @@
 package com.speer.notes.controller;
 
+
 import com.speer.notes.dto.request.NoteRequest;
 import com.speer.notes.dto.request.ShareNoteRequest;
 import com.speer.notes.dto.response.MessageResponse;
 import com.speer.notes.dto.response.NoteResponse;
-import com.speer.notes.entity.User;
 import com.speer.notes.service.NoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -15,13 +15,10 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -39,7 +36,7 @@ public class NoteController {
             description = "Return all notes of authenticate user")
     public ResponseEntity<Page<NoteResponse>> getAllUserNotes(
             Pageable pageable) {
-        return ResponseEntity.ok((Page<NoteResponse>) noteService.getAllNotes(pageable));
+        return ResponseEntity.ok(new  PageImpl<>(noteService.getAllNotes(pageable), pageable, noteService.getAllNotes(pageable).size()) );
     }
 
     @GetMapping("/{id}")
@@ -87,11 +84,6 @@ public class NoteController {
             @Valid @RequestBody ShareNoteRequest shareRequest) {
         return ResponseEntity.ok(noteService.shareNote(id, shareRequest));
     }
-    @GetMapping("/user")
-    public ResponseEntity<?> getUserDetails() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User) auth.getPrincipal();
-        return ResponseEntity.ok(currentUser);
 
-    }
+
 }
