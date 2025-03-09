@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
+public class ShareNoteRequest {
     @NotBlank
     private String username;
-
-    @NotBlank
-    private String password;
 }
