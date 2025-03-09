@@ -17,4 +17,23 @@ spring:
         format_sql: true
 
 
+springdoc:
+  api-docs:
+    enabled: true
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
+    tags-sorter: alpha
+
+logging:
+  level:
+    root: info
+    org:
+      springframework:
+        web: info
+      hibernate: info
+
+
+
 
