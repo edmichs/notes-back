@@ -11,5 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RoleRequest {
     @NotBlank
-    private ERole name;
+    private String name;
 }

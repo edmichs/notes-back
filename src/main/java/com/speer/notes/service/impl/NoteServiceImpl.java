@@ -17,8 +17,11 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,7 +43,7 @@ public class NoteServiceImpl implements NoteService {
      * @return
      */
     @Override
-    public List<NoteResponse> getAllNotes() {
+    public List<NoteResponse> getAllNotes( Pageable pageable) {
         User currentUser = getCurrentUser();
         List<Note> notes = noteRepository.findAllAccessibleByUser(currentUser);
         logger.info(notes.size() + " notes found");

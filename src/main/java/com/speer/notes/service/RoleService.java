@@ -7,14 +7,21 @@ import com.speer.notes.dto.response.NoteResponse;
 import com.speer.notes.dto.response.RoleResponse;
 import com.speer.notes.entity.ERole;
 import com.speer.notes.entity.Role;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface RoleService {
-    Optional<Role> findByName(ERole name);
-    List<RoleResponse> getAllRoles();
+    Optional<Role> getRoleByName(String name);
+    Page<Role> getAllRoles(Pageable pageable);
+
+    Page<Role> getAllRoles(int page, int size);
+
+    Role getRoleById(Long id);
     MessageResponse createRole(RoleRequest roleRequest);
-    MessageResponse updateRole(Long id, RoleRequest roleRequest);
+    RoleResponse updateRole(Long id, RoleRequest roleRequest);
     MessageResponse deleteRole(Long id);
 }

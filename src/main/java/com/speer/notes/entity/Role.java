@@ -20,9 +20,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 20, unique = true, nullable = false)
-    private ERole name;
+    @Column(length = 20, nullable = false)
+    private String name;
 
     @CreatedDate
     @Column(name = "created_at", nullable = false, updatable = false)
@@ -32,8 +31,5 @@ public class Role {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    public Role(ERole name) {
-        this.name = name;
-    }
 
 }

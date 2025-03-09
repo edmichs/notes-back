@@ -21,9 +21,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -71,6 +73,7 @@ public class AuthServiceImpl implements AuthService {
 
         return LoginResponse.builder()
                 .token(jwt)
+                .refreshToken(jwt)
                 .type("Bearer")
                 .id(userDetails.getId())
                 .username(userDetails.getUsername())
@@ -104,17 +107,17 @@ public class AuthServiceImpl implements AuthService {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null || strRoles.isEmpty()) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER.getDisplayValue())
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 if ("admin".equals(role)) {
-                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.getDisplayValue())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(adminRole);
                 } else {
-                    Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                    Role userRole = roleRepository.findByName(ERole.ROLE_USER.getDisplayValue())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(userRole);
                 }
@@ -122,6 +125,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setRoles(roles);
+        user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
         return new MessageResponse("User registered successfully!");
