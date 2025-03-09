@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.OnDeleteAction;
 import java.util.HashSet;
 import java.util.Set;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class Note extends AuditModel {
     private Long id;
 
     @NotBlank
-    @Column()
+    @Column(length = 100)
     private String title;
 
     @NotBlank
@@ -30,7 +32,6 @@ public class Note extends AuditModel {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private User owner;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,5 +39,8 @@ public class Note extends AuditModel {
             joinColumns = @JoinColumn(name = "note_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> sharedWith = new HashSet<>();
+
+    @Column()
+    private Set<String> tags = new HashSet<>();
 
 }
