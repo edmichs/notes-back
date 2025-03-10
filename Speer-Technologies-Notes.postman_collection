@@ -1,0 +1,424 @@
+{
+	"info": {
+		"_postman_id": "26b22225-80b0-42d4-99a9-048cb2996b97",
+		"name": "speer Technologies",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2607537",
+		"_collection_link": "https://bold-escape-988570.postman.co/workspace/klapeers~e477893e-94e3-46de-a0fd-cdd4f150016b/collection/2607537-26b22225-80b0-42d4-99a9-048cb2996b97?action=share&source=collection_link&creator=2607537"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"test1\",\r\n    \"email\" : \"test1@gmail.com\",\r\n    \"password\" : \"test123\",\r\n    \"roles\": [\"user\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"signup"
+							]
+						},
+						"description": "### POST /api/auth/signup\n\nThis endpoint is used to register a new user with the provided credentials.\n\n#### Request Body\n\n- `username` (string, required): The username of the new user.\n    \n- `email` (string, required): The email address of the new user.\n    \n- `password` (string, required): The password for the new user.\n    \n- `roles` (array of strings, optional): The role(s) assigned to the new user.\n    \n\nExample:\n\n``` json\n{\n    \"username\": \"test2\",\n    \"email\": \"test2@gmail.com\",\n    \"password\": \"test123\",\n    \"roles\": [\"user\"]\n}\n\n ```\n\n#### Response\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n    \"message\": \"\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test1\" ,\r\n    \"password\": \"test123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/auth/login",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "### POST /api/auth/login\n\nThis endpoint is used to authenticate a user and obtain an access token.\n\n#### Request Body\n\n- `username` (text): The username of the user.\n    \n- `password` (text): The password of the user.\n    \n\nExample:\n\n``` json\n{\n  \"username\": \"test1\",\n  \"password\": \"test123\"\n}\n\n ```\n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n\n``` json\n{\n  \"token\": \"\",\n  \"refreshToken\": \"\",\n  \"type\": \"\",\n  \"id\": 0,\n  \"username\": \"\",\n  \"email\": \"\",\n  \"roles\": [\"\"]\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "add",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/roles",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"roles"
+							]
+						},
+						"description": "The `POST` request to `/api/roles` endpoint is used to create a new role.\n\n### Request Body\n\nThe request should include a JSON payload with the following key:\n\n- `name`: (string) The name of the role to be created.\n    \n\n### Response\n\nUpon successful creation, the response will have a status code of 201 and a JSON object with the following schema:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"message\": {\n      \"type\": \"string\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/roles",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"roles"
+							]
+						},
+						"description": "### Get Roles\n\nThis endpoint retrieves a list of roles.\n\n**Request**\n\n- Method: GET\n    \n- URL: `localhost:8080/api/roles`\n    \n\n**Response**  \nThe response will be a JSON object with the following structure:\n\n``` json\n{\n  \"content\": [\n    {\n      \"id\": 0,\n      \"name\": \"\",\n      \"createdAt\": \"\",\n      \"updatedAt\": \"\"\n    }\n  ],\n  \"pageable\": {\n    \"pageNumber\": 0,\n    \"pageSize\": 0,\n    \"sort\": {\n      \"sorted\": true,\n      \"unsorted\": true,\n      \"empty\": true\n    },\n    \"offset\": 0,\n    \"paged\": true,\n    \"unpaged\": true\n  },\n  \"last\": true,\n  \"totalElements\": 0,\n  \"totalPages\": 0,\n  \"numberOfElements\": 0,\n  \"first\": true,\n  \"size\": 0,\n  \"number\": 0,\n  \"sort\": {\n    \"sorted\": true,\n    \"unsorted\": true,\n    \"empty\": true\n  },\n  \"empty\": true\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "notes",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTUzNjQ5NiwiZXhwIjoxNzQxNTQwMDk2fQ.QpWSop3nC0LYc6_0T57A9HNpNeSPCFBa1NPpW4kagHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Test test 3\",\r\n    \"content\" : \"Test content 3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/notes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes"
+							]
+						},
+						"description": "This endpoint allows you to create a new note by sending an HTTP POST request to localhost:8080/api/notes. The request should include a JSON payload in the raw request body type with the \"title\" and \"content\" fields.\n\n### Request Body\n\n- title (string, required): The title of the note.\n    \n- content (string, required): The content of the note.\n    \n\n### Response\n\nUpon successful creation, the server will respond with a status code of 201 and a JSON object containing the details of the newly created note, including its \"id\", \"title\", \"content\", \"ownerUsername\", \"sharedWith\" array, \"createdAt\", and \"updatedAt\" timestamps."
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTUzNjQ5NiwiZXhwIjoxNzQxNTQwMDk2fQ.QpWSop3nC0LYc6_0T57A9HNpNeSPCFBa1NPpW4kagHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notes",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes"
+							]
+						},
+						"description": "The endpoint retrieves a list of notes in JSON format. The response schema for the request is as follows:\n\n``` json\n{\n  \"type\": \"object\",\n  \"properties\": {\n    \"content\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"id\": {\n            \"type\": \"integer\"\n          },\n          \"title\": {\n            \"type\": \"string\"\n          },\n          \"content\": {\n            \"type\": \"string\"\n          },\n          \"ownerUsername\": {\n            \"type\": \"string\"\n          },\n          \"sharedWith\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"createdAt\": {\n            \"type\": \"string\"\n          },\n          \"updatedAt\": {\n            \"type\": \"string\"\n          }\n        }\n      }\n    },\n    \"pageable\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"pageNumber\": {\n          \"type\": \"integer\"\n        },\n        \"pageSize\": {\n          \"type\": \"integer\"\n        },\n        \"sort\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"empty\": {\n              \"type\": \"boolean\"\n            },\n            \"sorted\": {\n              \"type\": \"boolean\"\n            },\n            \"unsorted\": {\n              \"type\": \"boolean\"\n            }\n          }\n        },\n        \"offset\": {\n          \"type\": \"integer\"\n        },\n        \"paged\": {\n          \"type\": \"boolean\"\n        },\n        \"unpaged\": {\n          \"type\": \"boolean\"\n        }\n      }\n    },\n    \"last\": {\n      \"type\": \"boolean\"\n    },\n    \"totalElements\": {\n      \"type\": \"integer\"\n    },\n    \"totalPages\": {\n      \"type\": \"integer\"\n    },\n    \"size\": {\n      \"type\": \"integer\"\n    },\n    \"number\": {\n      \"type\": \"integer\"\n    },\n    \"sort\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"empty\": {\n          \"type\": \"boolean\"\n        },\n        \"sorted\": {\n          \"type\": \"boolean\"\n        },\n        \"unsorted\": {\n          \"type\": \"boolean\"\n        }\n      }\n    },\n    \"numberOfElements\": {\n      \"type\": \"integer\"\n    },\n    \"first\": {\n      \"type\": \"boolean\"\n    },\n    \"empty\": {\n      \"type\": \"boolean\"\n    }\n  }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTUzNjQ5NiwiZXhwIjoxNzQxNTQwMDk2fQ.QpWSop3nC0LYc6_0T57A9HNpNeSPCFBa1NPpW4kagHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\" : \"Test test 0\",\r\n    \"content\" : \"Test Content 0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/notes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes",
+								"1"
+							]
+						},
+						"description": "### Update Note\n\nThe `PUT` request is used to update a specific note with the given ID.\n\n#### Request Body\n\n- `title`: (string) The updated title of the note.\n    \n- `content`: (string) The updated content of the note.\n    \n\n#### Response\n\nThe response is in JSON format with the following schema:\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"id\": {\n            \"type\": \"integer\"\n        },\n        \"title\": {\n            \"type\": \"string\"\n        },\n        \"content\": {\n            \"type\": \"string\"\n        },\n        \"ownerUsername\": {\n            \"type\": \"string\"\n        },\n        \"sharedWith\": {\n            \"type\": \"array\",\n            \"items\": {}\n        },\n        \"createdAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        },\n        \"updatedAt\": {\n            \"type\": \"string\",\n            \"format\": \"date-time\"\n        }\n    }\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTUzNjQ5NiwiZXhwIjoxNzQxNTQwMDk2fQ.QpWSop3nC0LYc6_0T57A9HNpNeSPCFBa1NPpW4kagHo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notes/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes",
+								"1"
+							]
+						},
+						"description": "### Delete Note\n\nThis endpoint is used to delete a specific note by its ID.\n\n#### Request Body\n\nThis request does not require a request body.\n\n#### Response\n\n- Status: 204\n    \n- Content-Type: text/xml\n    \n- Body: null"
+					},
+					"response": []
+				},
+				{
+					"name": "ShareNote",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTU0MDM2MywiZXhwIjoxNzQxNTQzOTYzfQ.qw_RmAPkO7ijt18CNGe4Wziy1rHxP4cE6-CSI0FU4Ik",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/notes/2/share",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes",
+								"2",
+								"share"
+							]
+						},
+						"description": "### Share Note\n\nThis endpoint is used to share a specific note with a user.\n\n#### Request Body\n\n- `username` (string): The username of the user with whom the note will be shared.\n    \n\n#### Response\n\n- Status: 200\n    \n- Content-Type: application/json\n    \n- `message` (string): A message indicating the result of the sharing operation."
+					},
+					"response": []
+				},
+				{
+					"name": "getOne",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTU0MjcxNiwiZXhwIjoxNzQxNTQ2MzE2fQ.O1UiSjYkp-nZU1bl8WKCdgRK5WUaKNNfYijOUwfscp0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/notes/3",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"notes",
+								"3"
+							]
+						},
+						"description": "# Get Note by ID\n\nThis endpoint retrieves a specific note by its ID.\n\n## Request\n\n### Endpoint\n\n`GET /api/notes/3`\n\n## Response\n\n- Status: 200 OK\n    \n- Content-Type: application/json\n    \n\n``` json\n{\n    \"id\": 0,\n    \"title\": \"\",\n    \"content\": \"\",\n    \"ownerUsername\": \"\",\n    \"sharedWith\": [],\n    \"createdAt\": \"\",\n    \"updatedAt\": \"\"\n}\n\n ```\n\nThe response body contains the details of the note including its ID, title, content, owner's username, shared users, creation date, and last update date."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "users",
+			"item": [
+				{
+					"name": "current user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTYwNTk2NSwiZXhwIjoxNzQxNjA5NTY1fQ.hv5R5kwc7vZ_sXT-jIStWaM99TsUYbnlh1ihgeb0Bcc",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/users/current",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"current"
+							]
+						},
+						"description": "This endpoint makes an HTTP GET request to localhost:8080/api/users/current to retrieve the details of the current user. The response will be in JSON format with the user's ID, username, email, password, roles, creation timestamp, and update timestamp.\n\n### Request Body\n\nThis request does not require a request body.\n\n### Response Body\n\n- `id` (number): The ID of the user.\n    \n- `username` (string): The username of the user.\n    \n- `email` (string): The email address of the user.\n    \n- `password` (string): The password of the user.\n    \n- `roles` (array): An array of roles assigned to the user, each containing an ID, name, creation timestamp, and update timestamp.\n    \n- `createdAt` (string): The timestamp when the user was created.\n    \n- `updatedAt` (string): The timestamp when the user was last updated."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "search",
+			"item": [
+				{
+					"name": "search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0MSIsImlhdCI6MTc0MTU0MjcxNiwiZXhwIjoxNzQxNTQ2MzE2fQ.O1UiSjYkp-nZU1bl8WKCdgRK5WUaKNNfYijOUwfscp0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/api/search?q=test",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "test"
+								}
+							]
+						},
+						"description": "### GET /api/search\n\nThis endpoint retrieves search results based on the provided query parameter.\n\n#### Request\n\n- Method: GET\n    \n- URL: `localhost:8080/api/search`\n    \n- Query Parameters:\n    \n    - q (string, required): The search query.\n        \n\n#### Response\n\nThe response is in JSON format and follows the schema below:\n\n``` json\n{\n  \"content\": [\n    {\n      \"id\": \"number\",\n      \"title\": \"string\",\n      \"content\": \"string\",\n      \"ownerUsername\": \"string\",\n      \"sharedWith\": [\"string\"],\n      \"createdAt\": \"string\",\n      \"updatedAt\": \"string\"\n    }\n  ],\n  \"pageable\": {\n    \"pageNumber\": \"number\",\n    \"pageSize\": \"number\",\n    \"sort\": {\n      \"empty\": \"boolean\",\n      \"sorted\": \"boolean\",\n      \"unsorted\": \"boolean\"\n    },\n    \"offset\": \"number\",\n    \"paged\": \"boolean\",\n    \"unpaged\": \"boolean\"\n  },\n  \"last\": \"boolean\",\n  \"totalElements\": \"number\",\n  \"totalPages\": \"number\",\n  \"size\": \"number\",\n  \"number\": \"number\",\n  \"sort\": {\n    \"empty\": \"boolean\",\n    \"sorted\": \"boolean\",\n    \"unsorted\": \"boolean\"\n  },\n  \"numberOfElements\": \"number\",\n  \"first\": \"boolean\",\n  \"empty\": \"boolean\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
