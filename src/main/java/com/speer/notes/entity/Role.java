@@ -31,5 +31,8 @@ public class Role {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public Role(String name) {
+        this.name = name;
+    }
 
 }

@@ -1,31 +1,38 @@
 package com.speer.notes.config.rateLimit;
 
-import org.springframework.beans.factory.annotation.Value;
+
+import io.github.resilience4j.ratelimiter.RateLimiter;
+import io.github.resilience4j.ratelimiter.RateLimiterConfig;
+import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.time.Duration;
 
 @Configuration
-public class RateLimitConfig implements WebMvcConfigurer {
-    @Value("${app.ratelimiting.enabled:true}")
-    private boolean rateLimitingEnabled;
-
-    @Value("${app.ratelimiting.limit:100}")
-    private int rateLimit;
-
-    @Value("${app.ratelimiting.duration:60}")
-    private int durationInSeconds;
+public class RateLimitConfig  {
 
     @Bean
-    public RateLimitInterceptor rateLimitInterceptor() {
-        return new RateLimitInterceptor(rateLimitingEnabled, rateLimit, durationInSeconds);
+    public RateLimiter apiRateLimiter() {
+        RateLimiterConfig config = RateLimiterConfig.custom()
+                .limitRefreshPeriod(Duration.ofMinutes(1))
+                .limitForPeriod(30)
+                .timeoutDuration(Duration.ofSeconds(1))
+                .build();
+
+        RateLimiterRegistry registry = RateLimiterRegistry.of(config);
+        return registry.rateLimiter("apiRateLimiter");
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(rateLimitInterceptor())
-                .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/auth/**", "/api-docs/**", "/swagger-ui/**");
+    @Bean
+    public RateLimiter authRateLimiter() {
+        RateLimiterConfig config = RateLimiterConfig.custom()
+                .limitRefreshPeriod(Duration.ofMinutes(5))
+                .limitForPeriod(10)
+                .timeoutDuration(Duration.ofSeconds(1))
+                .build();
+
+        RateLimiterRegistry registry = RateLimiterRegistry.of(config);
+        return registry.rateLimiter("authRateLimiter");
     }
 }

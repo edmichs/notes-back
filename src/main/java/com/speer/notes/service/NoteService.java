@@ -15,4 +15,5 @@ public interface NoteService {
     NoteResponse updateNote(Long id, NoteRequest noteRequest);
     MessageResponse deleteNote(Long id);
     MessageResponse shareNote(Long id, ShareNoteRequest shareRequest);
+
 }

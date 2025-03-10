@@ -4,9 +4,9 @@ spring:
   application:
     name: Notes
   datasource:
-    url: jdbc:postgresql://localhost:5432/notes
-    password: admin
-    username: postgres
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/notes}
+    password: ${DB_USERNAME:admin}
+    username: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -15,6 +15,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
 
 
 springdoc:
@@ -36,9 +40,17 @@ logging:
 
 app:
   jwt:
-    secret: d164aa1c9cbcb828a2b6cc1538abc066b47d132a838ecc25bd692df4373c6eed
+    secret:  ${JWT_SECRET:d164aa1c9cbcb828a2b6cc1538abc066b47d132a838ecc25bd692df4373c6eed}
     expirationMs: 3600000
   ratelimiting:
     enabled: true
     limit: 100
     duration: 60
+
+resilience4j:
+  ratelimiter:
+     instances:
+        default:
+          limitForPeriod: 30
+          limitRefreshPeriod: 1m
+          timeoutDuration: 1s
