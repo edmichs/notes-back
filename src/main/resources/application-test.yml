@@ -1,0 +1,35 @@
+# Configuration de la base de données de test
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost:9092/testdb
+    username: testdb
+    password: password
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: false
+  
+app:
+  jwt:
+    secret: d164aa1c9cbcb828a2b6cc1538abc066b47d132a838ecc25bd692df4373c6eed
+    expirationMs: 3600000
+  ratelimiting:
+    enabled: true
+    limit: 100
+    duration: 60
+  
+resilience4j:
+  ratelimiter:
+    instances:
+      default:
+        limitForPeriod: 3
+        limitRefreshPeriod: 1m
+        timeoutDuration: 100ms

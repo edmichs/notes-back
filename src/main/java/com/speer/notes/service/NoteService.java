@@ -4,14 +4,16 @@ import com.speer.notes.dto.request.NoteRequest;
 import com.speer.notes.dto.request.ShareNoteRequest;
 import com.speer.notes.dto.response.MessageResponse;
 import com.speer.notes.dto.response.NoteResponse;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface NoteService {
-    List<NoteResponse> getAllNotes();
+    List<NoteResponse> getAllNotes(Pageable pageable);
     NoteResponse getNoteById(Long id);
     NoteResponse createNote(NoteRequest noteRequest);
     NoteResponse updateNote(Long id, NoteRequest noteRequest);
     MessageResponse deleteNote(Long id);
     MessageResponse shareNote(Long id, ShareNoteRequest shareRequest);
+
 }

@@ -23,7 +23,8 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
     @Query("SELECT n FROM Note n WHERE (n.owner = :user OR :user MEMBER OF n.sharedWith) AND n.id = :noteId")
     Optional<Note> findByIdAndAccessible(@Param("noteId") Long noteId, @Param("user") User user);
 
-    // Full-text search using PostgreSQL's to_tsquery function for better performance
     @Query(value = "SELECT * FROM notes n WHERE (n.owner_id = :userId OR EXISTS (SELECT 1 FROM note_shares ns WHERE ns.note_id = n.id AND ns.user_id = :userId)) AND (to_tsvector('english', n.title || ' ' || coalesce(n.content, '')) @@ to_tsquery('english', :searchQuery))", nativeQuery = true)
     List<Note> searchNotes(@Param("searchQuery") String searchQuery, @Param("userId") Long userId);
+
+    List<Note> owner(User owner);
 }

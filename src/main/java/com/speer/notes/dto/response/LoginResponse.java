@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class LoginResponse {
     private String token;
+    private String refreshToken;
     private String type = "Bearer";
     private Long id;
     private String username;
