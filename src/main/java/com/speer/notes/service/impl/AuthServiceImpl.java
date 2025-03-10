@@ -9,6 +9,7 @@ import com.speer.notes.dto.response.MessageResponse;
 import com.speer.notes.entity.ERole;
 import com.speer.notes.entity.Role;
 import com.speer.notes.entity.User;
+import com.speer.notes.exception.UnauthorizedException;
 import com.speer.notes.repository.RoleRepository;
 import com.speer.notes.repository.UserRepository;
 import com.speer.notes.service.AuthService;
@@ -21,9 +22,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -55,6 +58,8 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public LoginResponse authenticateUser(LoginRequest loginRequest) {
+        logger.info(" User Login " + loginRequest.getUsername() );
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
@@ -65,9 +70,11 @@ public class AuthServiceImpl implements AuthService {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+        logger.info(" Login successfull for user " + loginRequest.getUsername() );
 
         return LoginResponse.builder()
                 .token(jwt)
+                .refreshToken(jwt)
                 .type("Bearer")
                 .id(userDetails.getId())
                 .username(userDetails.getUsername())
@@ -82,6 +89,8 @@ public class AuthServiceImpl implements AuthService {
      */
     @Override
     public MessageResponse registerUser(RegisterRequest registerRequest) {
+        logger.info("start Registered user " + registerRequest.getUsername() );
+
         if (userRepository.existsByUsername(registerRequest.getUsername())) {
             return new MessageResponse("Error: Username is already taken!");
         }
@@ -99,17 +108,17 @@ public class AuthServiceImpl implements AuthService {
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null || strRoles.isEmpty()) {
-            Role userRole = roleRepository.findByName(ERole.ROLE_USER.name())
+            Role userRole = roleRepository.findByName(ERole.ROLE_USER.getDisplayValue())
                     .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
                 if ("admin".equals(role)) {
-                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.name())
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN.getDisplayValue())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(adminRole);
                 } else {
-                    Role userRole = roleRepository.findByName(ERole.ROLE_USER.name())
+                    Role userRole = roleRepository.findByName(ERole.ROLE_USER.getDisplayValue())
                             .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                     roles.add(userRole);
                 }
@@ -117,8 +126,10 @@ public class AuthServiceImpl implements AuthService {
         }
 
         user.setRoles(roles);
+        user.setCreatedAt(LocalDateTime.now());
         userRepository.save(user);
 
         return new MessageResponse("User registered successfully!");
     }
+
 }

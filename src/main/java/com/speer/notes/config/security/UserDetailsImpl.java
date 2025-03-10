@@ -58,7 +58,7 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public String getPassword() {
-        return "";
+        return this.password;
     }
 
 
@@ -67,7 +67,7 @@ public class UserDetailsImpl implements UserDetails {
      */
     @Override
     public String getUsername() {
-        return "";
+        return this.username;
     }
 
 }
