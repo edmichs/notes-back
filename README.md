@@ -29,13 +29,13 @@ A secure, scalable RESTful API enabling users to create, read, update and delete
 
 # Architecture
 The application follows a layered architecture:
-├── config/           # Spring Boot configuration and security
-├── controller/       # REST controllers exposing endpoints
-├── dto/              # Data transfer objects
-├── exception/        # Custom exception handling
-├── entity/            # JPA entities
-├── repository/       # Data access with Spring Data JPA
-├── service/          # Business Logic
+* ├── config/           # Spring Boot configuration and security
+* ├── controller/       # REST controllers exposing endpoints
+* ├── dto/              # Data transfer objects
+* ├── exception/        # Custom exception handling
+* ├── entity/            # JPA entities
+* ├── repository/       # Data access with Spring Data JPA
+* ├── service/          # Business Logic
 
 # Prerequisites
 * JDK 21
@@ -47,16 +47,19 @@ The application follows a layered architecture:
 ## Option 1: With Docker Compose (recommended)
 
 1. Clone the repository:
+
 `git clone https://github.com/edmichs/notes-back.git
 cd notes-back`
 
 2. Launch the application with Docker Compose:
+
 `docker-compose up`
 This command starts PostgreSQL and the application in separate containers.
 
 ## Option 2: Manual installation
 
 1. Clone the repository:
+
 `git clone https://github.com/edmichs/notes-back.git
 cd notes-back`
 
@@ -70,12 +73,14 @@ cd notes-back`
 3. Update  `src/main/resources/application.yml` with your connection parameters.
 
 4. Run the application:
+
    `mvn spring-boot:run`
 
 # API Endpoints
 ## Authentication
 
 * **POST /api/auth/signup**: Creating a user account
+
 `{
     "username" : "test2",
     "email" : "test2@gmail.com",
@@ -84,11 +89,14 @@ cd notes-back`
 }`
 
 * **POST /api/auth/login**: Login and obtain a JWT token
+
 `{
   "username": "test1" ,
   "password": "test123"
 }`
+
 Response:
+
 `{
   "token":"eyJhbGciOiJIUzI1NiJ9....",
   "refreshToken":"eyJhbGciOiJIUzI1NiJ9...",
@@ -101,17 +109,20 @@ Response:
 
 ## Notes
 All the following endpoints require a JWT authentication header:
+
 `Authorization: Bearer eyJhbGciOiJIUzI1NiJ9...`
 
 * **GET /api/notes:** Retrieve all user notes
 * **GET /api/notes/{id}**: Retrieve a note by ID
 * **POST /api/notes**: Create a new note
+
 `{
   "title" : "Test test",
   "content" : "Test content"
 }`
 
 * **PUT /api/notes/{id}**: Update an existing note
+
 `{
     "title" : "Test updated",
     "content" : "Test content updated"
@@ -119,6 +130,7 @@ All the following endpoints require a JWT authentication header:
 
 * **DELETE /api/notes/{id}**: Delete a note 
 * **POST /api/notes/{id}/share**: Share a note with another user
+
 `{
   "username" : "testShared"
 }`
@@ -133,15 +145,23 @@ These limits can be adjusted in the application.yml.
 # Tests
 ## Test Execution
 To run all tests (unit and integration):
+
 `mvn test`
+
 To run unit tests only:
+
 `mvn test -Dgroups="UnitTest"`
+
 To run integration tests only:
+
 `mvn test -Dgroups="IntegrationTest"`
+
 
 # API Documentation:
 Detailed Swagger documentation is available at the following address:
+
 `http://localhost:8080/swagger-ui/index.html`
 
 A Postman collection is also available at the project root.
+
 [Speer-Technologies-Notes.postman_collection](Speer-Technologies-Notes.postman_collection)
